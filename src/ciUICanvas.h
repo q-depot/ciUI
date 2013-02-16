@@ -411,18 +411,18 @@ public:
         switch(_kind)
         {
             case CI_UI_FONT_LARGE:                                              
-                fontLarge = Font( loadFile(fontName), _size);                
+                fontLarge = Font( loadResource(fontName), _size);                
                 font_large = gl::TextureFont::create(fontLarge);                
                 break; 
 
             case CI_UI_FONT_MEDIUM:
-                fontMedium = Font( loadFile(fontName), _size);                
+                fontMedium = Font( loadResource(fontName), _size);                
                 font_medium = gl::TextureFont::create(fontMedium);                
                 
                 break; 
 
             case CI_UI_FONT_SMALL:
-                fontSmall = Font( loadFile(fontName), _size);                
+                fontSmall = Font( loadResource(fontName), _size);
                 font_small = gl::TextureFont::create(fontSmall);                
                 
                 break; 
@@ -2175,18 +2175,18 @@ protected:
         switch(_kind)
         {
             case CI_UI_FONT_LARGE:              
-                fontLarge = Font( loadFile(filename), fontsize);                
+                fontLarge = Font( loadResource(filename), fontsize);
                 font_large = gl::TextureFont::create(fontLarge);
                 break; 
                 
             case CI_UI_FONT_MEDIUM:
-                fontMedium = Font( loadFile(filename), fontsize);                
+                fontMedium = Font( loadResource(filename), fontsize);                
                 font_medium = gl::TextureFont::create(fontMedium);
                 
                 break; 
                 
             case CI_UI_FONT_SMALL:
-                fontSmall = Font( loadFile(filename), fontsize);                
+                fontSmall = Font( loadResource(filename), fontsize);                
                 font_small = gl::TextureFont::create(fontSmall);
 
                 break; 
