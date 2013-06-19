@@ -237,7 +237,7 @@ public:
                 XML.push_back( XmlTree( "XValue", numToString( imageSampler->getValue().x ) ) ); 
                 XML.push_back( XmlTree( "YValue", numToString( imageSampler->getValue().y ) ) );                
                 XML.push_back( XmlTree( "RColor", numToString( imageSampler->getColor().r ) ) );                               
-                XML.push_back( XmlTree( "GColor", numToString( imageSampler->getColor().g ) ) );                               
+                XML.push_back( XmlTree( "GColor", numToString( imageSampler->getColor().g ) ) );
                 XML.push_back( XmlTree( "BColor", numToString( imageSampler->getColor().b ) ) );                                               
                 XML.push_back( XmlTree( "AColor", numToString( imageSampler->getColor().a ) ) );                               
             }
@@ -524,33 +524,35 @@ public:
 	//Mouse Callbacks
     void enableMouseEventCallbacks()
     {
-        mCbMouseDown = mApp->registerMouseDown( this, &ciUICanvas::canvasMouseDown );
-        mCbMouseUp = mApp->registerMouseUp( this, &ciUICanvas::canvasMouseUp );	
-        mCbMouseMove = mApp->registerMouseMove( this, &ciUICanvas::canvasMouseMove );
-        mCbMouseDrag = mApp->registerMouseDrag( this, &ciUICanvas::canvasMouseDrag );	
+        ci::app::WindowRef window   = app::App::get()->getWindow();
+        mCbMouseDown                = window->getSignalMouseDown().connect( std::bind( &ciUICanvas::canvasMouseDown, this, std::_1 ) );
+        mCbMouseUp                  = window->getSignalMouseUp().connect( std::bind( &ciUICanvas::canvasMouseUp, this, std::_1 ) );
+        mCbMouseDrag                = window->getSignalMouseDrag().connect( std::bind( &ciUICanvas::canvasMouseDrag, this, std::_1 ) );
+        mCbMouseMove                = window->getSignalMouseMove().connect( std::bind( &ciUICanvas::canvasMouseMove, this, std::_1 ) );
     }
 
 	//Mouse Callbacks
     void disableMouseEventCallbacks()
     {
-        mApp->unregisterMouseDown( mCbMouseDown );
-        mApp->unregisterMouseUp( mCbMouseUp );	
-        mApp->unregisterMouseMove( mCbMouseMove );
-        mApp->unregisterMouseDrag( mCbMouseDrag );	
+        mCbMouseDown.disconnect();
+        mCbMouseUp.disconnect();
+        mCbMouseDrag.disconnect();
+        mCbMouseMove.disconnect();
     }	
 
     //KeyBoard Callbacks
 	void enableKeyEventCallbacks()
 	{
-        mCbKeyDown = mApp->registerKeyDown( this, &ciUICanvas::canvasKeyDown );
-        mCbKeyUp = mApp->registerKeyUp( this, &ciUICanvas::canvasKeyUp );
+        ci::app::WindowRef window   = app::App::get()->getWindow();
+        mCbKeyDown                  = window->getSignalKeyDown().connect( std::bind( &ciUICanvas::canvasKeyDown, this, std::_1 ) );
+        mCbKeyUp                    = window->getSignalKeyUp().connect( std::bind( &ciUICanvas::canvasKeyUp, this, std::_1 ) );
 	}
 
 	//KeyBoard Callbacks
 	void disableKeyEventCallbacks()
 	{
-        mApp->unregisterKeyDown( mCbKeyDown ); 
-        mApp->unregisterKeyUp( mCbKeyUp );         
+        mCbKeyDown.disconnect();
+        mCbKeyUp.disconnect();
 	}
     
 #endif	    
@@ -2133,12 +2135,12 @@ protected:
     
     
 #if defined( CINDER_COCOA_TOUCH )
-    app::AppCocoaTouch *mApp;
-    ci::CallbackId mCbTouchesBegan, mCbTouchesMoved, mCbTouchesEnded; 
+    app::AppCocoaTouch              *mApp;
+    ci::CallbackId                  mCbTouchesBegan, mCbTouchesMoved, mCbTouchesEnded;
 #else
-    app::App *mApp;    	
-    ci::CallbackId mCbMouseDown, mCbMouseDrag, mCbMouseUp, mCbMouseMove;
-    ci::CallbackId mCbKeyDown, mCbKeyUp;
+    app::App                        *mApp;
+    ci::signals::scoped_connection  mCbMouseDown, mCbMouseDrag, mCbMouseUp, mCbMouseMove;
+    ci::signals::scoped_connection  mCbKeyDown, mCbKeyUp;
 #endif 
     
     gl::TextureFontRef font_large; 	
