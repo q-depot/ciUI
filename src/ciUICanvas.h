@@ -2107,7 +2107,7 @@ public:
                 widgetToReturn.push_back(widgets[i]);
             }
 		}	 
-        return widgetToReturn;                                         
+        return widgetToReturn;
     }
 
     template<typename T> ci::CallbackId registerUIEvents( T *obj, void (T::*callback)( ciUIEvent *event ) )
@@ -2176,21 +2176,20 @@ protected:
         bool success = true;
         switch(_kind)
         {
-            case CI_UI_FONT_LARGE:              
-                fontLarge = Font( loadResource(filename), fontsize);
+            case CI_UI_FONT_LARGE:
+                fontLarge = Font( filename, fontsize);
                 font_large = gl::TextureFont::create(fontLarge);
-                break; 
+                break;
                 
             case CI_UI_FONT_MEDIUM:
-                fontMedium = Font( loadResource(filename), fontsize);                
+                fontMedium = Font( filename, fontsize);
                 font_medium = gl::TextureFont::create(fontMedium);
                 
-                break; 
+                break;
                 
             case CI_UI_FONT_SMALL:
-                fontSmall = Font( loadResource(filename), fontsize);                
+                fontSmall = Font( filename, fontsize);
                 font_small = gl::TextureFont::create(fontSmall);
-
                 break; 
 
         }

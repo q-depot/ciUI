@@ -183,7 +183,7 @@ enum ciUIThemeType
     CI_UI_THEME_MINBLACK
 };
 
-#define CI_UI_FONT_NAME "NewMedia Fett.ttf"
+#define CI_UI_FONT_NAME "Arial"
 
 #define CI_UI_FONT_RESOLUTION 150
 
